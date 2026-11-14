@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="ops">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MAREX – Martian Area Risk Evaluation eXplorer</title>
+  <meta name="description" content="Interactive Mars terrain explorer with live NASA imagery, numerical terrain (slope, roughness), hazard annotations, route options, a measuring tool and a Mars clock.">
+  <meta name="theme-color" content="#120b0a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Cdefs%3E%3CradialGradient%20id='g'%20cx='.35'%20cy='.3'%20r='.85'%3E%3Cstop%20offset='0'%20stop-color='%23ff9a6a'/%3E%3Cstop%20offset='.55'%20stop-color='%23d9532a'/%3E%3Cstop%20offset='1'%20stop-color='%237a2a14'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle%20cx='50'%20cy='50'%20r='48'%20fill='url(%23g)'/%3E%3Cpath%20d='M34%2070%2072%2040'%20stroke='%235ee6ff'%20stroke-width='5'%20stroke-dasharray='8%206'%20fill='none'/%3E%3Ccircle%20cx='72'%20cy='40'%20r='6'%20fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="preconnect" href="https://trek.nasa.gov">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#map">Skip to map</a>
+  <noscript><div class="fatal">MAREX needs JavaScript to run.</div></noscript>
+
+  <!-- ============ Top bar ============ -->
+  <header class="top">
+    <button class="icon-btn only-desktop" id="toggleL" aria-label="Toggle left panel" aria-pressed="true" title="Toggle left panel  [">☰</button>
+    <svg class="logo" viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="lgM" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#ff9a6a"/><stop offset=".55" stop-color="#d9532a"/><stop offset="1" stop-color="#7a2a14"/></radialGradient></defs><circle cx="50" cy="50" r="48" fill="url(#lgM)"/><ellipse cx="33" cy="38" rx="13" ry="10" fill="#5a2a1e" opacity=".45"/><ellipse cx="68" cy="70" rx="12" ry="9" fill="#5a2a1e" opacity=".4"/><path d="M34 70 72 40" stroke="#5ee6ff" stroke-width="3" stroke-dasharray="6 4" fill="none"/><circle cx="34" cy="70" r="4" fill="#5ee6ff"/><circle cx="72" cy="40" r="5" fill="#fff" stroke="#5ee6ff" stroke-width="2.5"/></svg>
+    <div class="brand"><b>MAREX</b><small>Martian Area Risk Evaluation eXplorer · interplanetary survival guide</small></div>
+    <select id="reg" class="field" aria-label="Region"></select>
+
+    <div class="search">
+      <input id="q" class="field" type="text" autocomplete="off" spellcheck="false"
+             placeholder="Search a site or coordinates: 18.44, 77.45"
+             role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list" aria-label="Search">
+      <kbd class="slash">/</kbd>
+      <div id="sugg" role="listbox" hidden></div>
+    </div>
+
+    <div id="net" class="pill" data-s="wait" role="status"><i></i><span>Loading imagery…</span></div>
+
+    <div class="top-actions">
+      <button class="icon-btn" id="loc" aria-label="Jump to the landing site" title="Landing site  L">⌖</button>
+      <button class="icon-btn" id="link" aria-label="Copy a link to this view" title="Copy link to this view">🔗</button>
+      <button class="icon-btn" id="home" aria-label="Reset view" title="Reset view">⟲</button>
+      <button class="icon-btn" id="fs" aria-label="Full screen" title="Full screen  F">⛶</button>
+      <button class="icon-btn" id="th" aria-label="Switch theme" title="Switch theme  T">◐</button>
+      <button class="icon-btn" id="help" aria-label="Help and shortcuts" title="Help  ?">?</button>
+      <button class="btn sm" id="src">Data &amp; sources</button>
+      <button class="icon-btn only-desktop" id="toggleR" aria-label="Toggle right panel" aria-pressed="true" title="Toggle inspector  ]">▤</button>
+    </div>
+  </header>
+
+  <!-- ============ Left panel ============ -->
+  <aside id="L" class="side" aria-label="Controls">
+    <div class="tabs" id="tabs" role="tablist" aria-label="Panels">
+      <button role="tab" data-t="lay" class="on" aria-selected="true" aria-controls="lay">Layers</button>
+      <button role="tab" data-t="sit" aria-selected="false" aria-controls="sit">Sites</button>
+      <button role="tab" data-t="haz" aria-selected="false" aria-controls="haz">Hazards</button>
+      <button role="tab" data-t="rou" aria-selected="false" aria-controls="rou">Route</button>
+      <button role="tab" data-t="wea" aria-selected="false" aria-controls="wea">Weather</button>
+    </div>
+    <section id="lay" role="tabpanel"></section>
+    <section id="sit" role="tabpanel" hidden>
+      <input id="siteFilter" class="field block" type="search" placeholder="Filter sites, candidates, bookmarks…" aria-label="Filter sites">
+      <div id="sitList"></div>
+    </section>
+    <section id="haz" role="tabpanel" hidden></section>
+    <section id="rou" role="tabpanel" hidden></section>
+    <section id="wea" role="tabpanel" hidden></section>
+  </aside>
+
+  <!-- ============ Map ============ -->
+  <main id="M">
+    <div id="map" tabindex="-1"></div>
+    <div id="ban" role="status" hidden></div>
+    <button id="wx" data-day="" title="Mars clock for the middle of the map: open the Weather tab" aria-label="Open Mars clock and weather">Mars clock…</button>
+
+    <div id="modeChip" role="status" hidden>
+      <i class="rec"></i><span id="chipText"></span>
+      <button class="icon-btn sm" id="chipX" aria-label="Finish current tool">✕</button>
+    </div>
+
+    <div id="tools" role="toolbar" aria-label="Map tools">
+      <button data-mode="haz" aria-pressed="false" title="Place hazard marker (H)"><span>⚠</span>Hazard</button>
+      <button data-mode="route" aria-pressed="false" title="Plan a route (R)"><span>➜</span>Route</button>
+      <button data-mode="measure" aria-pressed="false" title="Measure distance (M)"><span>📏</span>Measure</button>
+    </div>
+
+    <div id="ov" aria-hidden="true"><div id="mini"></div></div>
+  </main>
+
+  <!-- ============ Right panel ============ -->
+  <aside id="R" class="side" aria-label="Inspector">
+    <h4 class="panel-title">Inspector</h4>
+    <div id="info" aria-live="polite"></div>
+  </aside>
+
+  <!-- ============ Status bar ============ -->
+  <footer class="bar">
+    <span id="b1">—</span><span id="b2"></span><span id="b3"></span><span id="b4"></span>
+  </footer>
+
+  <div id="toasts" aria-live="polite"></div>
+
+  <dialog id="dlg" aria-label="Information">
+    <div id="dbody"></div>
+    <form method="dialog" class="dlg-foot"><button class="btn">Close</button></form>
+  </dialog>
+
+  <dialog id="askDlg" aria-labelledby="askTitle">
+    <form method="dialog" id="askForm">
+      <h3 id="askTitle"></h3>
+      <label class="k" id="askLabel" for="askInput"></label>
+      <input id="askInput" class="field block" maxlength="60" autocomplete="off">
+      <div class="dlg-foot">
+        <button type="button" class="btn" onclick="document.getElementById('askDlg').close('cancel')">Cancel</button>
+        <button type="submit" class="btn primary" id="askOk" value="ok">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/tiles.js"></script>
+  <script src="js/mapview.js"></script>
+  <script src="js/layers.js"></script>
+  <script src="js/sites.js"></script>
+  <script src="js/hazards.js"></script>
+  <script src="js/inspector.js"></script>
+  <script src="js/route.js"></script>
+  <script src="js/measure.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/terrain.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
