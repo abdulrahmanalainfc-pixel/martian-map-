@@ -3,11 +3,11 @@
 # 🔴 MAREX
 ### Martian Area Risk Evaluation eXplorer
 
-<img src="docs/screenshots/banner.png" alt="MAREX – Martian Area Risk Evaluation eXplorer" width="100%">
+<img src="docs/screenshots/banner.gif" alt="MAREX – Martian Area Risk Evaluation eXplorer" width="100%">
+
+<sub>Banner: NASA/JPL-Caltech (PIA23179)</sub>
 
 **An interactive web map for exploring Mars terrain and evaluating surface risk, right in your browser.**
-
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-c1440e?style=for-the-badge)](https://abdulrahmanalainfc-pixel.github.io/martian-map-/marex.html)
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
@@ -18,7 +18,7 @@
 ![NASA Space Apps](https://img.shields.io/badge/NASA_Space_Apps-2026-0078D4)
 ![AI-assisted](https://img.shields.io/badge/AI--Assisted-8A2BE2)
 
-[Live Demo](#live-demo) · [Features](#features) · [Screenshots](#screenshots) · [Getting Started](#getting-started) · [Project Structure](#project-structure) · [AI Disclosure](#ai-disclosure)
+[Features](#features) · [Screenshots](#screenshots) · [Getting Started](#getting-started) · [Project Structure](#project-structure) · [AI Disclosure](#ai-disclosure)
 
 </div>
 
@@ -31,17 +31,6 @@
 The goal is simple: make Martian terrain data **easy to explore, easy to understand, and useful for reasoning about where it may be safe to land or travel**.
 
 > 💡 **No build step, no bundler, no dependencies to install.** Just static files served by any web server.
-
----
-
-## Live Demo
-
-👉 **[Open MAREX](https://abdulrahmanalainfc-pixel.github.io/martian-map-/marex.html)**
-
-The demo is hosted on GitHub Pages. To enable it on your own fork:
-**Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)`**.
-
-> **Tip:** rename `marex.html` to `index.html` if you want the demo to open at the short URL (`.../martian-map-/`) without the file name.
 
 ---
 
@@ -67,25 +56,11 @@ The demo is hosted on GitHub Pages. To enable it on your own fork:
 
 <div align="center">
 
-| Main map view | Layers panel |
-|:---:|:---:|
-| <img src="docs/screenshots/map-overview.png" alt="Main map view" width="100%"> | <img src="docs/screenshots/layers.png" alt="Layers panel" width="100%"> |
+<img src="docs/screenshots/map-overview.png" alt="MAREX main map view over Jezero Crater" width="100%">
 
-| Hazard overlay | Terrain inspector |
-|:---:|:---:|
-| <img src="docs/screenshots/hazards.png" alt="Hazard overlay" width="100%"> | <img src="docs/screenshots/inspector.png" alt="Terrain inspector" width="100%"> |
-
-| Route planning | Measure tool |
-|:---:|:---:|
-| <img src="docs/screenshots/route.png" alt="Route planning" width="100%"> | <img src="docs/screenshots/measure.png" alt="Measure tool" width="100%"> |
+<sub>Main map view: Jezero Crater with site markers, hazard / route / measure tools and the overview minimap.</sub>
 
 </div>
-
-<details>
-<summary>🎬 Demo GIF</summary>
-<br>
-<img src="docs/screenshots/demo.gif" alt="MAREX demo" width="100%">
-</details>
 
 ---
 
@@ -95,9 +70,9 @@ The demo is hosted on GitHub Pages. To enable it on your own fork:
 
 - A modern browser (Chrome, Edge, Firefox or Safari)
 - An internet connection (map tiles and Leaflet are loaded from CDNs)
-- Optional: Python 3 **or** Node.js to run a local server
+- Python 3 **or** Node.js to run a local server
 
-### Run locally (recommended)
+### Run locally
 
 MAREX uses **ES modules**, and most browsers block modules when a page is opened directly from disk (`file://`). Serve the folder with any static server instead:
 
@@ -114,9 +89,7 @@ npx serve .
 
 Then open **<http://localhost:8000/marex.html>** (or the port that `serve` prints).
 
----
-
-## How to Use
+### How to Use
 
 1. **Pan and zoom** with the mouse, touch, or the on-screen controls.
 2. **Open the layers panel** to change the base map and toggle overlays.
@@ -124,15 +97,6 @@ Then open **<http://localhost:8000/marex.html>** (or the port that `serve` print
 4. **Use the inspector** to read data at any point on the surface.
 5. **Plan a route** or **measure** distances using the toolbar tools.
 6. **Search** for a place or coordinates from the search box.
-
----
-
-## Tech Stack
-
-- [**Leaflet**](https://leafletjs.com/): interactive mapping library
-- [**NASA Solar System Treks**](https://trek.nasa.gov/): Mars map tiles and terrain data
-- **Vanilla JavaScript (ES modules)**: no framework, no build step
-- **HTML5 & CSS3**
 
 ---
 
@@ -160,7 +124,7 @@ martian-map-/
 │   ├── search.js       # Search
 │   ├── ui.js           # Interface components
 │   └── main.js         # App bootstrap
-├── assets/             # Images, icons and UI graphics
+├── assets/             # Icons and UI graphics
 ├── data/               # NASA datasets (elevation, terrain, slope…)
 └── docs/
     └── screenshots/    # Images used in this README
@@ -194,31 +158,10 @@ If you spot a bug or an inaccuracy, please [open an issue](https://github.com/ab
 
 - Map tiles and imagery: [**NASA Solar System Treks (Mars Trek)**](https://trek.nasa.gov/), courtesy of NASA/JPL-Caltech and the mission teams behind the datasets.
 - Mapping library: [**Leaflet**](https://leafletjs.com/) (BSD-2-Clause license).
+- Banner image: NASA/JPL-Caltech, [PIA23179](https://photojournal.jpl.nasa.gov/catalog/PIA23179).
 - Built for the [**NASA Space Apps Challenge 2026**](https://www.spaceappschallenge.org/).
-- AI assistance used in development, as detailed in the [AI Disclosure](#ai-disclosure).
 
 > ⚠️ **Disclaimer:** MAREX is an educational project. It is **not** an official NASA product, and its risk evaluations must **not** be used for real mission planning.
-
----
-
-## Roadmap
-
-- [ ] Add real NASA elevation datasets to `data/`
-- [ ] Landing-site comparison scoring
-- [ ] Export map snapshots as images
-- [ ] Offline mode with cached tiles
-
----
-
-## Contributing
-
-Contributions are welcome!
-
-1. Fork the repository
-2. Create a branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m "Add my feature"`
-4. Push: `git push origin feature/my-feature`
-5. Open a Pull Request
 
 ---
 
