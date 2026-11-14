@@ -167,7 +167,11 @@ If you spot a bug or an inaccuracy, please [open an issue](https://github.com/ab
 
 ## Team
 
-- **Abdulrahman**: [@abdulrahmanalainfc-pixel](https://github.com/abdulrahmanalainfc-pixel)
+- **Abdulrahman Ali**
+- **Ahmed Samir**
+- **Ahmed Saad**
+- **Zaid Mostafa**
+- **Zaid Mohamed**
 
 ---
 
