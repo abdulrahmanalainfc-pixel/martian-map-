@@ -23,14 +23,13 @@ An interactive 2D map designed to help astronauts explore and plan routes across
 - CSS
 - JavaScript
 - Leaflet
-- Python
 
 ## Project Structure
 - data/ — NASA datasets
 - assets/ — Visual resources
-- index.html — Main webpage
-- style.css — Styling
-- script.js — Map functionality
+- marex.html — Main webpage
+- css/ — Styling
+- js/ — Map functionality
 
 ## Project Status
 Currently under development.
