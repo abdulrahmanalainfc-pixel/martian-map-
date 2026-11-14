@@ -27,7 +27,6 @@ An interactive 2D map designed to help astronauts explore and plan routes across
 
 ## Project Structure
 - data/ — NASA datasets
-- python/ — Route planning
 - assets/ — Visual resources
 - index.html — Main webpage
 - style.css — Styling
