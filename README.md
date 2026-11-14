@@ -1,46 +1,51 @@
-# 🔴 MAREX — Martian Area Risk Evaluation eXplorer
-
 <div align="center">
 
-<!-- 🖼️ ضع صورة بانر عريضة (حوالي 1600×500) في docs/screenshots/banner.png -->
+# 🔴 MAREX
+### Martian Area Risk Evaluation eXplorer
+
 <img src="docs/screenshots/banner.png" alt="MAREX – Martian Area Risk Evaluation eXplorer" width="100%">
 
-**An interactive web map for exploring Mars terrain, comparing landing sites and evaluating surface risk — right in your browser.**
+**An interactive web map for exploring Mars terrain and evaluating surface risk, right in your browser.**
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-c1440e?style=for-the-badge)](https://abdulrahmanalainfc-pixel.github.io/martian-map-/)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Visit_Site-c1440e?style=for-the-badge)](https://abdulrahmanalainfc-pixel.github.io/martian-map-/marex.html)
+
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
 ![Leaflet](https://img.shields.io/badge/Leaflet-1.9-199900?logo=leaflet&logoColor=white)
 ![NASA Trek](https://img.shields.io/badge/Data-NASA_Trek-0B3D91?logo=nasa&logoColor=white)
 ![No build](https://img.shields.io/badge/Build-None-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-blue)
 ![NASA Space Apps](https://img.shields.io/badge/NASA_Space_Apps-2026-0078D4)
 ![AI-assisted](https://img.shields.io/badge/AI--Assisted-8A2BE2)
 
-[Live Demo](#-live-demo) · [Features](#-features) · [Screenshots](#-screenshots) · [Getting Started](#-getting-started) · [AI Disclosure](#-ai-disclosure)
+[Live Demo](#live-demo) · [Features](#features) · [Screenshots](#screenshots) · [Getting Started](#getting-started) · [Project Structure](#project-structure) · [AI Disclosure](#ai-disclosure)
 
 </div>
 
 ---
 
-## 📖 About
+## About
 
-**MAREX** is a lightweight, dependency-free web application that lets you explore the surface of Mars on an interactive map. It is built on **Leaflet** and powered by **NASA Solar System Treks** map tiles, combining terrain layers, points of interest, hazard overlays and measurement tools in one clean interface.
+**MAREX** is a lightweight, framework-free web application for exploring the surface of Mars on an interactive map. It is built on [Leaflet](https://leafletjs.com/) and powered by [NASA Solar System Treks](https://trek.nasa.gov/) map tiles, combining terrain layers, sites of interest, hazard overlays and measurement tools in one clean interface.
 
-The goal is simple: make Martian terrain data **easy to explore, easy to understand, and useful for evaluating where it is safe to land or travel**.
+The goal is simple: make Martian terrain data **easy to explore, easy to understand, and useful for reasoning about where it may be safe to land or travel**.
 
-> 💡 It runs from a single HTML file. **No server, no build tools, no installation.**
-
----
-
-## 🌐 Live Demo
-
-👉 **[Open MAREX](https://abdulrahmanalainfc-pixel.github.io/martian-map-/)**
-
-> The demo is hosted on GitHub Pages. To enable it: **Settings → Pages → Deploy from branch → `main` / root**.
+> 💡 **No build step, no bundler, no dependencies to install.** Just static files served by any web server.
 
 ---
 
-## ✨ Features
+## Live Demo
+
+👉 **[Open MAREX](https://abdulrahmanalainfc-pixel.github.io/martian-map-/marex.html)**
+
+The demo is hosted on GitHub Pages. To enable it on your own fork:
+**Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)`**.
+
+> **Tip:** rename `marex.html` to `index.html` if you want the demo to open at the short URL (`.../martian-map-/`) without the file name.
+
+---
+
+## Features
 
 | | Feature | Description |
 |---|---------|-------------|
@@ -54,13 +59,12 @@ The goal is simple: make Martian terrain data **easy to explore, easy to underst
 | 🧭 | **Route planning** | Draw a path between two points and see its details |
 | 📏 | **Measure tool** | Measure distances and areas directly on the map |
 | 🔍 | **Search** | Jump quickly to a named location or coordinates |
-| 🎨 | **Clean UI/UX** | Responsive, modern interface that works on desktop and mobile |
+| 🎨 | **Responsive UI** | Modern interface that works on desktop and mobile |
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-<!-- 📁 ضع الصور داخل docs/screenshots/ -->
 <div align="center">
 
 | Main map view | Layers panel |
@@ -85,36 +89,34 @@ The goal is simple: make Martian terrain data **easy to explore, easy to underst
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-### Option 1: Just open it (easiest)
+### Prerequisites
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/abdulrahmanalainfc-pixel/martian-map-.git
-   cd martian-map-
-   ```
-2. Open **`marex.html`** in any modern browser (Chrome, Edge, Firefox, Safari).
+- A modern browser (Chrome, Edge, Firefox or Safari)
+- An internet connection (map tiles and Leaflet are loaded from CDNs)
+- Optional: Python 3 **or** Node.js to run a local server
 
-> An internet connection is needed to load the map tiles and the Leaflet library.
+### Run locally (recommended)
 
-### Option 2: Run with a local server
-
-Useful if your browser blocks some features when opening files directly:
+MAREX uses **ES modules**, and most browsers block modules when a page is opened directly from disk (`file://`). Serve the folder with any static server instead:
 
 ```bash
-# Python
-python -m http.server 8000
+# 1. Clone the repository
+git clone https://github.com/abdulrahmanalainfc-pixel/martian-map-.git
+cd martian-map-
 
-# or Node.js
+# 2. Start a local server (pick one)
+python -m http.server 8000
+# or
 npx serve .
 ```
 
-Then visit **http://localhost:8000/marex.html**.
+Then open **<http://localhost:8000/marex.html>** (or the port that `serve` prints).
 
 ---
 
-## 🕹️ How to Use
+## How to Use
 
 1. **Pan and zoom** with the mouse, touch, or the on-screen controls.
 2. **Open the layers panel** to change the base map and toggle overlays.
@@ -125,20 +127,20 @@ Then visit **http://localhost:8000/marex.html**.
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
-- **[Leaflet](https://leafletjs.com/)** — interactive mapping library
-- **[NASA Solar System Treks](https://trek.nasa.gov/)** — Mars map tiles and terrain data
-- **Vanilla JavaScript (ES modules)** — no framework, no build step
+- [**Leaflet**](https://leafletjs.com/): interactive mapping library
+- [**NASA Solar System Treks**](https://trek.nasa.gov/): Mars map tiles and terrain data
+- **Vanilla JavaScript (ES modules)**: no framework, no build step
 - **HTML5 & CSS3**
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 martian-map-/
-├── marex.html          # Entry point (the whole app loads from here)
+├── marex.html          # Entry point
 ├── css/
 │   └── style.css       # Styling
 ├── js/
@@ -150,7 +152,7 @@ martian-map-/
 │   ├── layers.js       # Base layers and overlays
 │   ├── terrain.js      # Slope / elevation analysis
 │   ├── weather.js      # Mars weather layer
-│   ├── sites.js        # Points of interest
+│   ├── sites.js        # Sites of interest
 │   ├── hazards.js      # Risk / hazard data
 │   ├── inspector.js    # Point inspector
 │   ├── route.js        # Route planning
@@ -158,7 +160,7 @@ martian-map-/
 │   ├── search.js       # Search
 │   ├── ui.js           # Interface components
 │   └── main.js         # App bootstrap
-├── assets/             # Visual resources (images, icons, UI graphics)
+├── assets/             # Images, icons and UI graphics
 ├── data/               # NASA datasets (elevation, terrain, slope…)
 └── docs/
     └── screenshots/    # Images used in this README
@@ -166,17 +168,17 @@ martian-map-/
 
 ---
 
-## 🤖 AI Disclosure
+## AI Disclosure
 
 Transparency matters to us, so here is exactly how AI was used in this project.
 
-**We used AI tools as a development assistant** for parts of this project, including:
+**We used AI tools as a development assistant** for parts of the project, including:
 
-- 🔍 Code review and auditing of the logic and calculations
+- 🔍 Code review and auditing of logic and calculations
 - 🐛 Finding and fixing bugs
 - 💡 Brainstorming and implementing features
 - 🎨 UI/UX suggestions and polish
-- 📝 Help writing documentation, including this README
+- 📝 Writing documentation, including this README
 
 **What this means in practice:**
 
@@ -184,22 +186,22 @@ Transparency matters to us, so here is exactly how AI was used in this project.
 - AI-generated suggestions were **reviewed, tested and edited** by the team before being included.
 - We are **responsible for the final result**, including any remaining mistakes.
 
-If you spot a bug or an inaccuracy, please [open an issue](../../issues).
+If you spot a bug or an inaccuracy, please [open an issue](https://github.com/abdulrahmanalainfc-pixel/martian-map-/issues).
 
 ---
 
-## 🙏 Credits & Data Sources
+## Credits & Data Sources
 
-- Map tiles and imagery: **[NASA Solar System Treks (Mars Trek)](https://trek.nasa.gov/)**, courtesy of NASA/JPL-Caltech and the mission teams behind the datasets.
-- Mapping library: **[Leaflet](https://leafletjs.com/)** (BSD-2-Clause license).
-- Project built for the **NASA Space Apps Challenge 2026**.
-- AI assistance used in development, as detailed in the [AI Disclosure](#-ai-disclosure) section.
+- Map tiles and imagery: [**NASA Solar System Treks (Mars Trek)**](https://trek.nasa.gov/), courtesy of NASA/JPL-Caltech and the mission teams behind the datasets.
+- Mapping library: [**Leaflet**](https://leafletjs.com/) (BSD-2-Clause license).
+- Built for the [**NASA Space Apps Challenge 2026**](https://www.spaceappschallenge.org/).
+- AI assistance used in development, as detailed in the [AI Disclosure](#ai-disclosure).
 
-> ⚠️ This is an educational project. It is **not** an official NASA product, and its risk evaluations should **not** be used for real mission planning.
+> ⚠️ **Disclaimer:** MAREX is an educational project. It is **not** an official NASA product, and its risk evaluations must **not** be used for real mission planning.
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Add real NASA elevation datasets to `data/`
 - [ ] Landing-site comparison scoring
@@ -208,7 +210,7 @@ If you spot a bug or an inaccuracy, please [open an issue](../../issues).
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome!
 
@@ -220,15 +222,15 @@ Contributions are welcome!
 
 ---
 
-## 👥 Team
+## Team
 
-- **Abdulrahman** — [@abdulrahmanalainfc-pixel](https://github.com/abdulrahmanalainfc-pixel)
+- **Abdulrahman**: [@abdulrahmanalainfc-pixel](https://github.com/abdulrahmanalainfc-pixel)
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
